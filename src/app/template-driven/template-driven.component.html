@@ -1,0 +1,91 @@
+<p>Form value -- {{ f.value | json }}</p>
+<p>User value -- {{ user | json }}</p>
+<!--<p>Errors - {{ f.controls.name?.errors | json }}</p>-->
+
+
+<!--<form novalidate #f="ngForm">-->
+<!--<label>-->
+<!--<span>Full name</span>-->
+<!--<input type="text" placeholder="Your full name">-->
+<!--</label>-->
+<!--</form>-->
+
+
+<!--<form novalidate #f="ngForm">-->
+<!--<input-->
+<!--type="text"-->
+<!--placeholder="Your full name"-->
+<!--name="name"-->
+<!--ngModel>-->
+<!--</form>-->
+
+
+<!--<form #f="ngForm">-->
+<!--<input-->
+<!--type="text"-->
+<!--placeholder="Your full name"-->
+<!--name="name"-->
+<!--[(ngModel)]="user.name"-->
+<!--required>-->
+<!--</form>-->
+
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)" class="card card-block">
+  <div class="form-group">
+    <label>
+      <span>Full name</span>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Your full name"
+        name="name"
+        [ngModel]="user.name"
+        #userName="ngModel"
+        minlength="2"
+        required>
+    </label>
+    <div *ngIf="f.controls.name?.errors?.required && userName.touched" class="error">
+      Name is required
+    </div>
+    <div *ngIf="userName.errors?.minlength && userName.touched" class="error">
+      Minimum of 2 characters
+    </div>
+  </div>
+  <div class="form-group">
+    <label>
+      <span>Email</span>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Your email"
+        name="email"
+        [ngModel]="user.email"
+        #userEmail="ngModel"
+        required>
+    </label>
+    <div *ngIf="userEmail.errors?.required && userEmail.touched" class="error">
+      Email is required
+    </div>
+    <div *ngIf="userEmail.errors?.pattern && userEmail.dirty" class="error">
+      Email has incorrect format
+    </div>
+  </div>
+  <div class="form-group">
+    <label>
+      <span>Confirm Email</span>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Confirm email"
+        name="confirm"
+        [ngModel]="user.confirm"
+        #userConfirm="ngModel"
+        required>
+    </label>
+    <div *ngIf="userConfirm.errors?.required && userConfirm.touched" class="error">
+      Confirm email is required
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Sign up</button>
+</form>
+
+
